@@ -1,7 +1,7 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
 export default class Perfil extends BaseSchema {
-  protected tableName = 'perfil'
+  protected tableName = 'perfils'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
