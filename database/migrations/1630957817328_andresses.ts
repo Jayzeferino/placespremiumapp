@@ -1,18 +1,17 @@
 import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 
-export default class Perfil extends BaseSchema {
-  protected tableName = 'perfil'
+export default class Addresses extends BaseSchema {
+  protected tableName = 'addresses'
 
   public async up () {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
-      table.integer('user_id').unsigned().references('id').inTable('users').onDelete('CASCADE')
-      table.string('name')
-      table.string('img_url')
-      table.string('fone').notNullable()
-      table.string('services')
-      table.integer('andress_id').unsigned().references('id').inTable('addresses').onDelete('CASCADE')
-  
+      table.string('postcode').notNullable()
+      table.string('street').notNullable()
+      table.string('number').notNullable()
+      table.string('city').notNullable()
+      table.string('state').notNullable()
+      table.string('country').notNullable()
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
