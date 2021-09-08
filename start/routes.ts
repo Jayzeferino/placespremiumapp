@@ -1,11 +1,12 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/menu', async ({ auth }) => {
-    await auth.use('api').authenticate()
-    return auth.use('api').user!
-  })
+Route.get('/dashboard', 'UsersController.index')
+.middleware('auth')
 
-Route.post("/users","UsersController.create");
+Route.get('/perfil','PerfilsController.index')
+.middleware('auth');
+
+Route.post("/register","PerfilsController.store");
 
 Route.post('/login','Authcontroller.login');

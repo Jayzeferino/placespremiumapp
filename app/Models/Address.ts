@@ -1,8 +1,12 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column,hasOne, HasOne } from '@ioc:Adonis/Lucid/Orm'
-import Perfil from 'App/Models/Perfil'
+import { BaseModel, column, HasOne, hasOne} from '@ioc:Adonis/Lucid/Orm'
 
-export default class Andress extends BaseModel {
+import Perfil from './Perfil'
+
+export default class Address extends BaseModel {
+ 
+  @column({ isPrimary: true })
+  public id: number
   
   @column()
   public postcode: string
@@ -28,7 +32,9 @@ export default class Andress extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => Perfil)
+  @hasOne(() => Perfil,{
+    foreignKey:'address_id'
+  })
   public perfil: HasOne<typeof Perfil>
 
 }

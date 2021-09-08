@@ -1,12 +1,9 @@
 import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, BelongsTo, column} from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
-import Andress from 'App/Models/Andress'
-
+import Address from './Address'
 
 export default class Perfil extends BaseModel {
-
-
   @column({ isPrimary: true })
   public id: number
 
@@ -23,10 +20,13 @@ export default class Perfil extends BaseModel {
   public fone: string
   
   @column()
-  public andress_id: number
+  public services: string
+  
+  @column()
+  public address_id: number
 
   @column()
-  public services: string
+  public styles: JSON
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -34,10 +34,14 @@ export default class Perfil extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
   
-  @belongsTo(() => User)
+  @belongsTo(() => User,{
+    localKey: 'user_id'
+  })
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => )
-  public user: BelongsTo<typeof User>
+  @belongsTo(() => Address,{
+    localKey: 'address_id'
+  }) 
+  public address: BelongsTo<typeof Address>
 
 }
