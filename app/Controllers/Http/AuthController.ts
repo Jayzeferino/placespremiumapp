@@ -13,7 +13,7 @@ export default class AuthController {
                 expiresIn: '30min',
                 name: user?.serialize().email
             })
-                return {token, user: user?.serialize()}
+                return {token}
             } catch {
                 return response.badRequest('Invalid credentials')
             }

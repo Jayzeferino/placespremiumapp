@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasOne, hasOne} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, BelongsTo, belongsTo, column} from '@ioc:Adonis/Lucid/Orm'
 
 import Perfil from './Perfil'
 
@@ -13,6 +13,9 @@ export default class Address extends BaseModel {
 
   @column()
   public street: string
+
+  @column()
+  public perfil_id: number
 
   @column()
   public number: string
@@ -32,9 +35,9 @@ export default class Address extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => Perfil,{
-    foreignKey:'address_id'
+  @belongsTo(() => Perfil,{
+    localKey: 'perfil_id',
   })
-  public perfil: HasOne<typeof Perfil>
+  public perfil: BelongsTo<typeof Perfil>
 
 }

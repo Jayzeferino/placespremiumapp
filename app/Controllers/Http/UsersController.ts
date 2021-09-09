@@ -4,9 +4,32 @@ import User from 'App/Models/User';
 export default class UsersController {
     
     public async index({auth}: HttpContextContract){
+
         const user = await User.find(auth.user?.id)
-        await user?.preload('perfil')
-        return {user};
+        await user?.preload('perfil', (postsQuery) => {
+            postsQuery.preload('address')
+        })
+        const perfil = user.serialize({
+            fields: {
+              omit: ['id','password','created_at' ,'updated_at']
+            },
+            relations: {
+                perfil: {
+                  fields: {
+                    omit: ['id','user_id','created_at' ,'updated_at']
+                  },
+                  relations: {
+                    address: {
+                      fields: {
+                        omit: ['id','perfil_id','created_at' ,'updated_at']
+                      },
+                    },
+                    }
+                }
+            }
+          })
+
+        return{perfil};
     }
 
     public async store({ request }: HttpContextContract) { 

@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon'
-import { BaseModel, belongsTo, BelongsTo, column} from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, belongsTo, BelongsTo, column, HasOne, hasOne} from '@ioc:Adonis/Lucid/Orm'
 import User from 'App/Models/User'
 import Address from './Address'
 
@@ -21,12 +21,9 @@ export default class Perfil extends BaseModel {
   
   @column()
   public services: string
-  
-  @column()
-  public address_id: number
 
   @column()
-  public styles: JSON
+  public color: string
   
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -35,13 +32,13 @@ export default class Perfil extends BaseModel {
   public updatedAt: DateTime
   
   @belongsTo(() => User,{
-    localKey: 'user_id'
+    localKey: 'user_id',
   })
   public user: BelongsTo<typeof User>
 
-  @belongsTo(() => Address,{
-    localKey: 'address_id'
-  }) 
-  public address: BelongsTo<typeof Address>
+  @hasOne(() => Address,{
+    foreignKey:'id'
+  })
+  public address: HasOne<typeof Address>
 
 }

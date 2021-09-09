@@ -10,9 +10,8 @@ export default class Perfil extends BaseSchema {
       table.string('name')
       table.string('img_url')
       table.string('fone').notNullable()
-      table.integer('address_id').unsigned().references('id').inTable('addresses').onDelete('CASCADE')
       table.string('services')
-      table.jsonb('styles')
+      table.string('color')
         /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL
        */
