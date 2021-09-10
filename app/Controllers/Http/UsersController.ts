@@ -3,13 +3,13 @@ import User from 'App/Models/User';
 
 export default class UsersController {
     
-    public async index({auth}: HttpContextContract){
+    public async show({auth}: HttpContextContract){
 
         const user = await User.find(auth.user?.id)
         await user?.preload('perfil', (postsQuery) => {
             postsQuery.preload('address')
         })
-        const perfil = user.serialize({
+        const perfil = user?.serialize({
             fields: {
               omit: ['id','password','created_at' ,'updated_at']
             },
@@ -41,7 +41,7 @@ export default class UsersController {
         return user;
     }
 
-    public async update({auth,request}:HttpContextContract){
+    public async edit({auth,request}:HttpContextContract){
 
         const user = await User.findOrFail(auth.user?.id)
         user.email = request.input("email")

@@ -38,7 +38,7 @@ export default class PerfilsController {
         return perfil;
     }
 
-    public async update({auth, request }: HttpContextContract) { 
+    public async edit({auth, request }: HttpContextContract) { 
 
         const {  name, img_url, fone, services, color, postcode, street, number, city, state, country} = request
         .only(["name", "img_url", "fone", "services", "color","postcode","street","number","city","state","country"]);
@@ -62,12 +62,12 @@ export default class PerfilsController {
         await perfil.save()
         await address.save()
 
-        return {"SUCESSO"}
+        return perfil
     }
     
     public async show({ request }: HttpContextContract) { 
         const perfil = await Perfil.query()
-        .preload('address')
+        .preload('address').paginate(1,10)
 
         const perfils= perfil.map((user) => user.serialize({
             fields: {
@@ -81,6 +81,8 @@ export default class PerfilsController {
                 },
                 }
         }))
+
+        
         return {perfils};
     }
     
